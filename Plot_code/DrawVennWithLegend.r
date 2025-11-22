@@ -37,7 +37,9 @@ DrawVennWithLegend <- function(
     short_names = c("A", "B", "C", "D"),
     legend_order = c("D", "C", "B", "A"),
     legend_title = "Groups",
-    layout_widths = c(3, 1.5)
+    layout_widths = c(3, 1.5),
+    label = 'both',
+    label_size = 3
 ) {
   
   # --- 1. 加载所需的库 ---
@@ -47,14 +49,11 @@ DrawVennWithLegend <- function(
   require(dplyr)
   
   # --- 2. 输入验证 ---
-  if (!is.list(x) || length(x) != 4) {
+  if (!is.list(x)){
     stop("错误: 'x' 必须是一个包含 4 个元素的列表。")
   }
   if (is.null(names(x)) || any(names(x) == "")) {
     stop("错误: 'x' 必须是一个 '命名' 列表 (e.g., list('Group A' = ...))。")
-  }
-  if (length(set_colors) != 4 || length(short_names) != 4 || length(legend_order) != 4) {
-    stop("错误: 'set_colors', 'short_names', 和 'legend_order' 都必须是 4 个元素。")
   }
   
   # --- 3. 绘制图 A (p_venn - 韦恩图) ---
@@ -63,9 +62,9 @@ DrawVennWithLegend <- function(
       x,
       label_alpha = 0,
       set_color = set_colors,  # <-- 使用参数
-      label_size = 4,
+      label_size = label_size,
       edge_size = 0.5,
-      label = "both",
+      label = label,
       set_size = 4.5,
       category.names = short_names # <-- 使用参数
     ) +
